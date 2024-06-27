@@ -1,0 +1,122 @@
+{% load static %}
+{% load acl_tags %}
+
+<div class="col-lg-3 col-md-3">
+    <div class="dashboard-navbar">
+
+        <div class="d-user-avater">
+            <img src="{% static 'img/user-3.jpg' %}" class="img-fluid avater" alt="">
+            <h4>{{ request.user.first_name }} {{ request.user.last_name}}</h4>
+            <span>{{ request.user.phoneNumber }}</span>
+        </div>
+
+        <div class="d-navigation">
+            <ul id="side-menu">
+                <li class="active"><a href="{% url 'dashboard' %}"><i class="ti-briefcase"></i>داشبورد</a></li>
+
+                {% if request.user|has_perm:'user_list,user_create,user_edit,user_delete' %}
+                <li class="dropdown">
+                    <a href="{% url 'users-list' %}"><i class="ti-user"></i>مدیریت کاربران<span
+                            class="ti-angle-right"></span></a>
+                    <ul class="nav nav-second-level">
+                        {% if request.user|has_perm:'user_list,user_edit,user_delete' %}
+                        <li><a href="{% url 'users-list' %}">لیست کاربران</a></li>
+                        {% endif %}
+
+                        {% if request.user|has_perm:'user_create' %}
+                        <li><a href="{% url 'users-create' %}">ساخت کاربر جدید</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% endif %}
+
+
+                {% if request.user|has_perm:'doctors_list,doctors_create,doctors_edit,doctors_delete' %}
+                <li class="dropdown">
+                    <a href="{% url 'doctor-list' %}"><i class="ti-pin"></i>مدیریت پزشک<span
+                            class="ti-angle-right"></span></a>
+                    <ul class="nav nav-second-level">
+                        {% if request.user|has_perm:'doctors_list,doctors_edit,doctors_delete' %}
+                        <li><a href="{% url 'doctor-list' %}">لیست پزشکان</a></li>
+                        {% endif %}
+
+                        {% if request.user|has_perm:'doctors_create' %}
+                            <li><a href="{% url 'doctor-create' %}">ساخت پزشک جدید</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% endif %}
+
+
+                {% if request.user|has_perm:'tests_list,tests_create,tests_edit,tests_delete' %}
+                <li class="dropdown">
+                    <a href="{% url 'medical-list' %}"><i class="ti-clip"></i>مدیریت ازمایش ها<span
+                            class="ti-angle-right"></span></a>
+                    <ul class="nav nav-second-level">
+                        {% if request.user|has_perm:'tests_list,tests_edit,tests_delete' %}
+                        <li><a href="{% url 'medical-list' %}">لیست ازمایش ها</a></li>
+                        {% endif %}
+
+                        {% if request.user|has_perm:'tests_create' %}
+                        <li><a href="{% url 'medical-create' %}">ساخت ازمایش جدید</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% endif %}
+
+                {% if request.user|has_perm:'insurances_list,insurances_create,insurances_edit,insurances_delete' %}
+                <li class="dropdown">
+                    <a href="{% url 'insurance-list' %}"><i class="ti-files"></i>مدیریت بیمه ها<span
+                            class="ti-angle-right"></span></a>
+                    <ul class="nav nav-second-level">
+                        {% if request.user|has_perm:'insurances_list,insurances_edit,insurances_delete' %}
+                        <li><a href="{% url 'insurance-list' %}">لیست بیمه ها</a></li>
+                        {% endif %}
+
+                        {% if request.user|has_perm:'insurances_create' %}
+                        <li><a href="{% url 'insurance-create' %}">ساخت بیمه جدید</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% endif %}
+
+                {% if request.user|has_perm:'receptions_list,receptions_create,receptions_edit,receptions_delete' %}
+                <li class="dropdown">
+                    <a href="{% url 'reception-list' %}"><i class="ti-id-badge"></i>مدیریت پذیرش ها<span
+                            class="ti-angle-right"></span></a>
+                    <ul class="nav nav-second-level">
+                        {% if request.user|has_perm:'receptions_list,receptions_edit,receptions_delete' %}
+                        <li><a href="{% url 'reception-list' %}">لیست پذیرش ها</a></li>
+                        {% endif %}
+
+                        {% if request.user|has_perm:'receptions_create' %}
+                        <li><a href="{% url 'reception-create' %}">ساخت پذیرش جدید</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% endif %}
+
+                {% if request.user|has_perm:'warehouses_list,warehouses_create,warehouses_edit,warehouses_delete' %}
+                    <li class="dropdown">
+                        <a href="{% url 'warehouses-list' %}"><i class="ti-package"></i>مدیریت انبار ها<span
+                                class="ti-angle-right"></span></a>
+                        <ul class="nav nav-second-level">
+                            {% if request.user|has_perm:'warehouses_list,warehouses_edit,warehouses_delete' %}
+                            <li><a href="{% url 'warehouses-list' %}">لیست انبار ها</a></li>
+                            {% endif %}
+
+                            {% if request.user|has_perm:'warehouses_create' %}
+                            <li><a href="{% url 'warehouses-create' %}">ساخت جدید</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                {% endif %}
+
+                <li><a href="my-profile.html"><i class="ti-heart"></i>اکانت من</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+
+</div>

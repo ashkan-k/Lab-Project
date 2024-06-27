@@ -1,0 +1,79 @@
+{% extends 'admin/_Main.html' %}
+{% block content %}
+
+    <!-- Row -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">لیست کاربران</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- /Row -->
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="cancel"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- Row -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="dashboard_container">
+                <div class="dashboard_container_header">
+                    <div class="dashboard_fl_1">
+                        <h4>مشاهده لیست کاربران</h4>
+                        <br>
+                        <a class="btn btn-primary pull-right" href="{% url 'users-create' %}">افزودن کاربر جدید</a>
+                    </div>
+                </div>
+                <div class="dashboard_container_body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">شناسه</th>
+                                <th scope="col">نام</th>
+                                <th scope="col">نام خانوادگی</th>
+                                <th scope="col">شماره موبایل</th>
+                                <th scope="col">کد ملی</th>
+                                <th scope="col">تاریخ</th>
+                                <th scope="col">نقش</th>
+                                <th scope="col">وضعیت</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in object_list %}
+                                <tr>
+                                    <th scope="row">{{ item.id }}</th>
+                                    <td>{{ item.first_name | default:'---' }}</td>
+                                    <td>{{ item.last_name | default:'---' }}</td>
+                                    <td>{{ item.phoneNumber | default:'---' }}</td>
+                                    <td>{{ item.national_id | default:'---' }}</td>
+                                    <td>{{ item.jcreated |  default:'---' }}</td>
+                                    <td><span class="payment_status inprogress">درحال بررسی</span></td>
+                                    <td>
+                                        <div class="dash_action_link">
+                                            <a href="{% url 'users-update' item.id %}" class="view">ویرایش</a>
+                                            <a href="{% url 'users-delete' item.id %}" class="cancel">حذف</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- /Row -->
+
+{% endblock %}

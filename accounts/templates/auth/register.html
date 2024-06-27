@@ -1,0 +1,72 @@
+{% extends 'auth/_Auth.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %} ثبت نام {% endblock %}
+
+{% block content %}
+
+    <!-- Row -->
+    <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+    <div class="dashboard_container">
+        <div class="dashboard_container_header">
+            <div class="log__heads">
+                <h4 class="mt-0 logs_title">ایجاد یک <span class="theme-cl">حساب کاربری</span></h4>
+            </div>
+        </div>
+        <div class="dashboard_container_body p-4">
+            <!-- Basic info -->
+            <div class="submit-section">
+                <form class="form-horizontal"
+                      method="post"
+                      enctype="multipart/form-data">
+                    <div class="form-row">
+
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="form-group col-md-6">
+                                <label class="control-label col-lg-2"
+                                       for="id_{{ field.name }}"></label>
+
+                                <div class="col-md-10">
+                                    {{ field | as_crispy_field }}
+
+                                    {% if field.help_text %}
+                                        <p><small style="font-size: 14px">{{ field.help_text|safe }} </small>
+                                        </p>
+                                    {% endif %}
+                                    {% if field.errors %}
+                                        <p><small class="text-danger" style="font-size: 14px"
+                                                  style="color:red">{{ field.errors.0|safe }}</small></p>
+                                    {% endif %}
+                                    {% if field.non_field_errors %}
+                                        <p><small class="text-danger" style="font-size: 20px"
+                                                  style="color:red">{{ field.non_field_errors.0|safe }}</small>
+                                        </p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+
+
+                        <div class="form-group">
+                            <a onclick="$('#frm').submit()" class="btn btn_apply w-100 other_buttons_hover">ثبت نام</a>
+                        </div>
+                        <!-- Basic info -->
+
+                    </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- /Row -->
+
+    <!-- row-->
+    <div class="row">
+
+
+    </div>
+    <!-- Row End -->
+{% endblock %}

@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content=""/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+    <title>{% block title %} پنل مدیریت {% endblock %}</title>
+
+    <!-- Custom CSS -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
+    <!-- Custom Color Option -->
+    <link href="{% static 'css/colors.css' %}" rel="stylesheet">
+
+</head>
+
+<body class="red-skin rtl">
+
+<div id="preloader">
+    <div class="preloader"><span></span><span></span></div>
+</div>
+
+<div id="main-wrapper">
+
+    <!-- Start Navigation -->
+    <div class="header header-light head-shadow">
+        {% include 'inc/Navbar.html' %}
+    </div>
+
+    <!-- End Navigation -->
+    <div class="clearfix"></div>
+    <!-- ============================================================== -->
+    <!-- Top header  -->
+    <!-- ============================================================== -->
+
+
+    <!-- ============================ Dashboard: Dashboard Start ================================== -->
+    <section class="gray pt-5">
+        <div class="container-fluid">
+            <div class="row">
+                {% include 'inc/Sidebar.html' %}
+                <div class="col-lg-9 col-md-9 col-sm-12">
+                    {% block content %}
+
+                    {% endblock %}
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    <!-- ============================ Dashboard: Dashboard End ================================== -->
+
+    <!-- ============================ Footer Start ================================== -->
+    {% include 'inc/Footer.html' %}
+    <!-- ============================ Footer End ================================== -->
+
+    <a id="back2Top" class="top-scroll" title="Back to top" href="#"><i class="ti-arrow-up"></i></a>
+
+
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
+<!-- All Jquery -->
+<!-- ============================================================== -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/select2.min.js' %}"></script>
+<script src="{% static 'js/slick.js' %}"></script>
+<script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+<script src="{% static 'js/counterup.min.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+<!-- ============================================================== -->
+<!-- This page plugins -->
+<!-- ============================================================== -->
+<script src="{% static 'js/metisMenu.min.js' %}"></script>
+<script>
+    $('#side-menu').metisMenu();
+</script>
+
+</body>
+
+</html>

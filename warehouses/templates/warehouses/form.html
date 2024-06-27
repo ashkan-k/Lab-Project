@@ -1,0 +1,92 @@
+{% extends 'admin/_Main.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block title %} {% if object %}ویرایش مورد{% else %}افزودن مورد{% endif %} {% endblock %}
+
+{% block content %}
+
+    <!-- Row -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">افزودن مورد</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- /Row -->
+
+    <!-- Row -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="dashboard_container">
+                <div class="dashboard_container_header">
+                    <div class="dashboard_fl_1">
+                        <h4>{% if object %}ویرایش مورد{% else %}افزودن مورد جدید{% endif %}</h4>
+                    </div>
+                </div>
+                <div class="dashboard_container_body p-4">
+                    <!-- Basic info -->
+                    <div class="submit-section">
+                        <form class="form-horizontal"
+                              method="post"
+                              enctype="multipart/form-data">
+                            <div class="form-row">
+
+                                {% csrf_token %}
+                                {% for field in form %}
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label col-lg-2"
+                                               for="id_{{ field.name }}"></label>
+
+                                        <div class="col-md-10">
+                                            {{ field | as_crispy_field }}
+
+                                            {% if field.help_text %}
+                                                <p><small style="font-size: 14px">{{ field.help_text|safe }} </small>
+                                                </p>
+                                            {% endif %}
+                                            {% if field.errors %}
+                                                <p><small class="text-danger" style="font-size: 14px"
+                                                          style="color:red">{{ field.errors.0|safe }}</small></p>
+                                            {% endif %}
+                                            {% if field.non_field_errors %}
+                                                <p><small class="text-danger" style="font-size: 20px"
+                                                          style="color:red">{{ field.non_field_errors.0|safe }}</small>
+                                                </p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                <div class="col-lg-12">
+                                    <div class="m-1-25 m-b-20" style="float: left !important;">
+                                        <a href="{{ request.META.HTTP_REFERER }}"
+                                           class="btn btn-danger btn-border-radius waves-effect">
+                                            بازگشت
+                                        </a>
+                                        <button class="btn btn-info btn-border-radius waves-effect" type="submit">ثبت
+                                        </button>
+                                    </div>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Basic info -->
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+    <!-- /Row -->
+
+    <!-- row-->
+    <div class="row">
+
+
+    </div>
+    <!-- Row End -->
+{% endblock %}

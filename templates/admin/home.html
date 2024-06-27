@@ -1,0 +1,103 @@
+{% extends 'admin/_Main.html' %}
+{% block content %}
+    <!-- Row -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">داشبورد</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- /Row -->
+
+    <!-- Row -->
+    <div class="row">
+
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+            <div class="dashboard_stats_wrap">
+                <div class="dashboard_stats_wrap_content"><h4
+                        class="text-success">{{ medical_test_count | default_if_none:'0' }}</h4> <span>تعداد ازمایش ها</span>
+                </div>
+                <div class="dashboard_stats_wrap-icon"><i class="ti-clip"></i></div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+            <div class="dashboard_stats_wrap">
+                <div class="dashboard_stats_wrap_content"><h4 class="text-warning">{{ receptions_count | default_if_none:'0' }}</h4> <span>تعداد پذیرش ها</span></div>
+                <div class="dashboard_stats_wrap-icon"><i class="ti-write"></i></div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+            <div class="dashboard_stats_wrap">
+                <div class="dashboard_stats_wrap_content"><h4 class="text-danger">{{ user_count | default_if_none:'0' }}</h4> <span>تعداد مراجعه کننده</span>
+                </div>
+                <div class="dashboard_stats_wrap-icon"><i class="ti-user"></i></div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
+            <div class="dashboard_stats_wrap">
+                <div class="dashboard_stats_wrap_content"><h4 class="text-info">{{ user_count | default_if_none:'10' }}</h4> <span>تعداد تراکنش مالی</span></div>
+                <div class="dashboard_stats_wrap-icon"><i class="ti-credit-card"></i></div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /Row -->
+
+    <!-- row-->
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="dashboard_container">
+                <div class="dashboard_container_header">
+                    <div class="dashboard_fl_1">
+                        <h4>مشاهده اخرین پذیرش ها</h4>
+                        <br>
+                        <a class="btn btn-primary pull-right" href="{% url 'reception-list' %}">مشاهده کامل پذیرش ها</a>
+                    </div>
+                </div>
+                <div class="dashboard_container_body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">شناسه</th>
+                                <th scope="col">نام و نام خانوادگی</th>
+                                <th scope="col">ازمایش</th>
+                                <th scope="col">تلفن همراه</th>
+                                <th scope="col">پزشک</th>
+                                <th scope="col">تاریخ</th>
+                                <th scope="col">وضعیت</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in receptions %}
+                                <tr>
+                                    <th scope="row">{{ item.id }}</th>
+                                    <td>{{ item.full_name | default:'---' }}</td>
+                                    <td>{{ item.medical_tests | default:'---' }}</td>
+                                    <td>{{ item.mobile_phone | default:'---' }}</td>
+                                    <td>{{ item.doctors | default:'---' }}</td>
+                                    <td>{{ item.jcreated | default:'---' }}</td>
+                                    <td>
+                                        <div class="dash_action_link">
+                                            <a href="{% url 'reception-update' item.id %}" class="view">ویرایش</a>
+                                            <a href="{% url 'reception-delete' item.id %}" class="cancel">حذف</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

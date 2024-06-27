@@ -1,0 +1,71 @@
+{% extends 'auth/_Auth.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}ورود{% endblock %}
+
+{% block content %}
+
+    <div class="col-lg-6 col-md-7 position-static p-4">
+        <form method="post" id="frm">
+            {% csrf_token %}
+
+            <div class="log_wraps">
+
+                <a href="/" class="log-logo_head"><img
+                        src="{% static 'dashboard/assets/img/logo.png' %}"
+                        class="img-fluid" width="80"
+                        alt=""/></a>
+                <div class="log__heads">
+                    <h4 class="mt-0 logs_title">ورود به <span class="theme-cl">حساب کاربری</span></h4>
+                </div>
+
+                {% if messages %}
+                    {% for item in messages %}
+                        <p class="text-center text-success justify-content-center">{{ item }}</p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if form.non_field_errors %}
+                    {% for item in form.non_field_errors %}
+                        <p class="text-center text-danger justify-content-center">{{ item|safe }}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="form-group">
+                    <label for="id_username">شماره موبایل*</label>
+                    <input type="text" required name="username" id="id_username" class="form-control" placeholder="09121111111">
+
+                    {% if form.username.errors %}
+                        <p class="text-danger"
+                           style="margin-right: 20px!important;">{{ form.username.errors.0|escape }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_password">رمز عبور*<a href="" class="elio_right">رمز خود را
+                        فراموش
+                        کرده اید؟</a></label>
+                    <input type="password" required id="id_password" name="password" class="form-control" placeholder="*******">
+
+                    {% if form.password.errors %}
+                        <p class="text-danger"
+                           style="margin-right: 20px!important;">{{ form.password.errors.0|escape }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <a onclick="$('#frm').submit()" class="btn btn_apply w-100 other_buttons_hover">ورود</a>
+                </div>
+
+
+                <div class="form-group text-center mb-0 mt-3">
+                    آیا هنوز ثبت نام نکرده اید؟ <a href="{% url 'register' %}" class="theme-cl">ثبت نام</a>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

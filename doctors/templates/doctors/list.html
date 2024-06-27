@@ -1,0 +1,78 @@
+{% extends 'admin/_Main.html' %}
+{% block content %}
+
+    <!-- Row -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">لیست پزشکان</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- /Row -->
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="cancel"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <!-- Row -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="dashboard_container">
+                <div class="dashboard_container_header">
+                    <div class="dashboard_fl_1">
+                        <h4>مشاهده لیست پزشکان</h4>
+                        <br>
+                        <a class="btn btn-primary pull-right" href="{% url 'doctor-create' %}">افزودن پزشک جدید</a>
+                    </div>
+                    {% include 'admin/search_box.html' %}
+                </div>
+                <div class="dashboard_container_body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">شناسه</th>
+                                <th scope="col">نام و نام خانوادگی</th>
+                                <th scope="col">شماره تماس</th>
+                                <th scope="col">تخصص</th>
+                                <th scope="col">تصویر پزشک</th>
+                                <th scope="col">تاریخ</th>
+                                <th scope="col">وضعیت</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in object_list %}
+                                <tr>
+                                    <th scope="row">{{ item.id }}</th>
+                                    <td>{{ item.full_name | default:'---' }}</td>
+                                    <td>{{ item.contact_number | default:'---' }}</td>
+                                    <td>{{ item.specialization | default:'---' }}</td>
+                                    <td>{{ item.image | default:'---' }}</td>
+                                    <td>{{ item.jcreated | default:'---' }}</td>
+                                    <td>
+                                        <div class="dash_action_link">
+                                            <a href="{% url 'doctor-update' item.id %}" class="view">ویرایش</a>
+                                            <a href="{% url 'doctor-delete' item.id %}" class="cancel">حذف</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- /Row -->
+
+{% endblock %}
