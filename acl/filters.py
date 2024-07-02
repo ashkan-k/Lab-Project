@@ -70,3 +70,27 @@ class UserRoleFilters(filters.FilterSet):
         except:
             pass
         return qs
+
+
+class UserPermissionFilters(filters.FilterSet):
+    search = filters.CharFilter(method="search_filter")
+    limit = filters.CharFilter(method="limit_filter")
+
+    @staticmethod
+    def search_filter(qs, name, value):
+        qs = qs.filter(
+            Q(user__first_name__icontains=value) |
+            Q(user__last_name__icontains=value) |
+            Q(user__phone__icontains=value) |
+            Q(permissions__name__icontains=value) |
+            Q(permissions__code__icontains=value)
+        ).distinct()
+        return qs
+
+    @staticmethod
+    def limit_filter(qs, name, value):
+        try:
+            qs = qs.distinct()[:int(unidecode(value))]
+        except:
+            pass
+        return qs

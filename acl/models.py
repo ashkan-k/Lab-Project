@@ -37,7 +37,8 @@ class Permission(models.Model):
 
 
 class UserRole(models.Model):
-    role = models.ForeignKey(to=Role, on_delete=models.CASCADE, related_name='users', verbose_name='نقش', null=True, blank=True)
+    role = models.ForeignKey(to=Role, on_delete=models.CASCADE, related_name='users', verbose_name='نقش', null=True,
+                             blank=True)
     user = models.OneToOneField(to=User, on_delete=models.CASCADE, related_name='role', verbose_name='کاربر')
 
     class Meta:
@@ -52,3 +53,20 @@ class UserRole(models.Model):
         if self.role:
             return self.role.name
         return 'کاربر'
+
+
+class UserPermission(models.Model):
+    permissions = models.ManyToManyField(to=Permission, related_name='users',
+                                         verbose_name='دسترسی ها', blank=True)
+    user = models.OneToOneField(to=User, on_delete=models.CASCADE, related_name='permissions', verbose_name='کاربر')
+
+    class Meta:
+        verbose_name = 'دسترسی کاربر'
+        verbose_name_plural = 'دسترسی کاربران'
+
+    def __str__(self):
+        return f"{self.user}"
+
+    @property
+    def permissions_name(self):
+        return [item.name for item in self.permissions.all()]

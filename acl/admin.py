@@ -15,3 +15,4 @@ class PermissionAdmin(admin.ModelAdmin):
 
 
 admin.site.register(UserRole)
+admin.site.register(UserPermission)

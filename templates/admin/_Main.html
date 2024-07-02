@@ -19,7 +19,7 @@
 
 </head>
 
-<body class="red-skin rtl">
+<body class="red-skin rtl" ng-app="myApp" ng-controller="myCtrl">
 
 <div id="preloader">
     <div class="preloader"><span></span><span></span></div>
@@ -86,6 +86,22 @@
 <script>
     $('#side-menu').metisMenu();
 </script>
+
+<script src="{% static 'js/angular.min.js' %}"></script>
+
+<script>
+    var app = angular.module("myApp", []);
+    app.config(function ($interpolateProvider, $httpProvider) {
+        $interpolateProvider.startSymbol('[[');
+        $interpolateProvider.endSymbol(']]');
+
+        $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+        $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+    });
+
+</script>
+
+{% block Scripts %}{% endblock %}
 
 </body>
 

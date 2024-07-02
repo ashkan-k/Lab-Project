@@ -9,15 +9,15 @@ dashboard_urls = [
     path('roles/update/<int:pk>/', RolesUpdateView.as_view(), name='roles-update'),
     path('roles/delete/<int:pk>/', RolesDeleteView.as_view(), name='roles-delete'),
 
-    path('permissions/', PermissionsListView.as_view(), name='permissions-list'),
-    path('permissions/create/', PermissionsCreateView.as_view(), name='permissions-create'),
-    path('permissions/update/<int:pk>/', PermissionsUpdateView.as_view(), name='permissions-update'),
-    path('permissions/delete/<int:pk>/', PermissionsDeleteView.as_view(), name='permissions-delete'),
-
     path('role/user/', RoleUserListView.as_view(), name='role-user-list'),
     path('role/user/create/', RoleUserCreateView.as_view(), name='role-user-create'),
     path('role/user/update/<int:pk>/', RoleUserUpdateView.as_view(), name='role-user-update'),
     path('role/user/delete/<int:pk>/', RoleUserDeleteView.as_view(), name='role-user-delete'),
+
+    path('permission/user/', UserPermissionsListView.as_view(), name='permission-user-list'),
+    # path('permission/user/create/', RolesCreateView.as_view(), name='permission-user-create'),
+    # path('permission/user/update/<int:pk>/', RolesUpdateView.as_view(), name='permission-user-update'),
+    # path('permission/user/delete/<int:pk>/', RolesDeleteView.as_view(), name='permission-user-delete'),
 ]
 
 urlpatterns += dashboard_urls
