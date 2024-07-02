@@ -170,7 +170,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             return PERMISSIONS
         else:
             try:
-                return self.role.role.permissions_list
+                return self.user_permission.permissions_list
             except:
                 return []
 

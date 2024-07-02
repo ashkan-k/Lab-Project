@@ -9,8 +9,8 @@ from acl.forms import RoleForm, PermissionForm, UserRoleForm, UserPermissionForm
 from acl.models import *
 from django.contrib.auth import get_user_model
 
-from acl.permissions import PERMISSIONS
-from acl.mixins import SuperUserRequiredMixin
+from acl.permissions import PERMISSIONS, filter_permissions
+from acl.mixins import SuperUserRequiredMixin, PermissionMixin
 
 User = get_user_model()
 
@@ -133,7 +133,7 @@ class RoleUserDeleteView(SuperUserRequiredMixin, DeleteView):
 ############################################################################
 
 
-class UserPermissionsListView(SuperUserRequiredMixin, ListView):
+class UserPermissionsListView(PermissionMixin, ListView):
     permissions = ['user_permissions_list']
     model = UserPermission
     # paginate_by = settings.PAGINATION_NUMBER
@@ -145,7 +145,7 @@ class UserPermissionsListView(SuperUserRequiredMixin, ListView):
         return UserPermissionFilters(data=self.request.GET, queryset=queryset).qs
 
 
-class UserPermissionsCreateView(SuperUserRequiredMixin, CreateView):
+class UserPermissionsCreateView(PermissionMixin, CreateView):
     permissions = ['user_permissions_create']
     model = UserPermission
     template_name = 'acl/admin/user_permissions/form.html'
@@ -154,11 +154,17 @@ class UserPermissionsCreateView(SuperUserRequiredMixin, CreateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
-        context['permissions'] = PERMISSIONS
+
+        if self.request.user.is_staff:
+            context['permissions'] = PERMISSIONS
+        else:
+            user_permissions = self.request.user.permissions
+            context['permissions'] = filter_permissions(PERMISSIONS, user_permissions)
+
         return context
 
 
-class UserPermissionsUpdateView(SuperUserRequiredMixin, UpdateView):
+class UserPermissionsUpdateView(PermissionMixin, UpdateView):
     permissions = ['user_permissions_edit']
     model = UserPermission
     form_class = UserPermissionForm
@@ -167,11 +173,17 @@ class UserPermissionsUpdateView(SuperUserRequiredMixin, UpdateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
-        context['permissions'] = PERMISSIONS
+
+        if self.request.user.is_staff:
+            context['permissions'] = PERMISSIONS
+        else:
+            user_permissions = self.request.user.permissions
+            context['permissions'] = filter_permissions(PERMISSIONS, user_permissions)
+
         return context
 
 
-class UserPermissionsDeleteView(SuperUserRequiredMixin, DeleteView):
+class UserPermissionsDeleteView(PermissionMixin, DeleteView):
     permissions = ['user_permissions_delete']
     model = UserPermission
     template_name = 'acl/admin/user_permissions/confirm_delete.html'

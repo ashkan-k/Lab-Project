@@ -31,6 +31,23 @@
                 {% endif %}
 
 
+                {% if request.user|has_perm:'user_permissions_list,user_permissions_create,user_permissions_edit,user_permissions_delete' %}
+                    <li class="dropdown">
+                        <a href="{% url 'permission-user-list' %}"><i class="ti-lock"></i>مدیریت دسترسی کاربران<span
+                                class="ti-angle-right"></span></a>
+                        <ul class="nav nav-second-level">
+                            {% if request.user|has_perm:'user_permissions_list,user_permissions_edit,user_permissions_delete' %}
+                                <li><a href="{% url 'permission-user-list' %}">لیست دسترسی کاربران</a></li>
+                            {% endif %}
+
+                            {% if request.user|has_perm:'user_permissions_create' %}
+                                <li><a href="{% url 'permission-user-create' %}">ساخت دسترسی کاربر جدید</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                {% endif %}
+
+
                 {% if request.user|has_perm:'doctors_list,doctors_create,doctors_edit,doctors_delete' %}
                 <li class="dropdown">
                     <a href="{% url 'doctor-list' %}"><i class="ti-pin"></i>مدیریت پزشک<span

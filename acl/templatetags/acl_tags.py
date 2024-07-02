@@ -47,14 +47,6 @@ def has_permission(user, args):
     if user.is_superuser:
         return True
 
-    if user.role_code == 'teacher':
-        if not hasattr(user, 'teacher_profile') or not user.teacher_profile.is_approved:
-            return False
-
-    if user.role_code == 'student':
-        if not hasattr(user, 'student_profile') or not user.student_profile.is_approved:
-            return False
-
     for permission in args.split(","):
         try:
             if user.check_has_permission(permission):

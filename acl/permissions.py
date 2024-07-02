@@ -112,6 +112,21 @@ PERMISSIONS.append(WAREHOUSES_PERMISSIONS)
 
 ######################################################################
 
+USER_PERMISSIONS_PERMISSIONS = {
+    'title': 'دسترسی دسترسی کاربر ها',
+    'permissions': [
+        {'name': 'لیست دسترسی کاربر ها', 'code': 'user_permissions_list', 'description': 'دسترسی لیست دسترسی کاربر ها'},
+        {'name': 'افزودن دسترسی کاربر ها', 'code': 'user_permissions_create',
+         'description': 'دسترسی ساخت دسترسی کاربر ها جدید'},
+        {'name': 'ویرایش دسترسی کاربر ها', 'code': 'user_permissions_edit',
+         'description': 'دسترسی ویرایش دسترسی کاربر ها'},
+        {'name': 'حذف دسترسی کاربر ها', 'code': 'user_permissions_delete', 'description': 'دسترسی حذف دسترسی کاربر ها'},
+    ]
+}
+PERMISSIONS.append(USER_PERMISSIONS_PERMISSIONS)
+
+######################################################################
+
 TEST_RESULT_PERMISSIONS = {
     'title': 'دسترسی جواب آزمایش',
     'permissions': [
@@ -133,6 +148,22 @@ PAYMENTS_PERMISSIONS = {
     ]
 }
 PERMISSIONS.append(PAYMENTS_PERMISSIONS)
+
+######################################################################
+
+def filter_permissions(permissions, codes):
+    filtered_permissions = []
+    for permission_category in permissions:
+        filtered_category = {
+            'title': permission_category['title'],
+            'permissions': [p for p in permission_category['permissions'] if p['code'] in codes]
+        }
+        if filtered_category['permissions']:
+            filtered_permissions.append(filtered_category)
+    return filtered_permissions
+
+
+######################################################################
 
 
 class ROLE_CODES:

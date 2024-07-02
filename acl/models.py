@@ -70,3 +70,7 @@ class UserPermission(models.Model):
     @property
     def permissions_name(self):
         return [item.name for item in self.permissions.all()]
+
+    @property
+    def permissions_list(self):
+        return list(self.permissions.values_list('code', flat=True))
