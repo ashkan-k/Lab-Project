@@ -58,7 +58,7 @@ class UserRole(models.Model):
 class UserPermission(models.Model):
     permissions = models.ManyToManyField(to=Permission, related_name='users',
                                          verbose_name='دسترسی ها', blank=True)
-    user = models.OneToOneField(to=User, on_delete=models.CASCADE, related_name='permissions', verbose_name='کاربر')
+    user = models.OneToOneField(to=User, on_delete=models.CASCADE, related_name='user_permission', verbose_name='کاربر')
 
     class Meta:
         verbose_name = 'دسترسی کاربر'

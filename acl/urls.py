@@ -15,9 +15,9 @@ dashboard_urls = [
     path('role/user/delete/<int:pk>/', RoleUserDeleteView.as_view(), name='role-user-delete'),
 
     path('permission/user/', UserPermissionsListView.as_view(), name='permission-user-list'),
-    # path('permission/user/create/', RolesCreateView.as_view(), name='permission-user-create'),
-    # path('permission/user/update/<int:pk>/', RolesUpdateView.as_view(), name='permission-user-update'),
-    # path('permission/user/delete/<int:pk>/', RolesDeleteView.as_view(), name='permission-user-delete'),
+    path('permission/user/create/', UserPermissionsCreateView.as_view(), name='permission-user-create'),
+    path('permission/user/update/<int:pk>/', UserPermissionsUpdateView.as_view(), name='permission-user-update'),
+    path('permission/user/delete/<int:pk>/', UserPermissionsDeleteView.as_view(), name='permission-user-delete'),
 ]
 
 urlpatterns += dashboard_urls

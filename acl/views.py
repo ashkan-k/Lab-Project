@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from acl.filters import PermissionFilters, RoleFilters, UserRoleFilters, UserPermissionFilters
-from acl.forms import RoleForm, PermissionForm, UserRoleForm
+from acl.forms import RoleForm, PermissionForm, UserRoleForm, UserPermissionForm
 from acl.models import *
 from django.contrib.auth import get_user_model
 
@@ -134,6 +134,7 @@ class RoleUserDeleteView(SuperUserRequiredMixin, DeleteView):
 
 
 class UserPermissionsListView(SuperUserRequiredMixin, ListView):
+    permissions = ['user_permissions_list']
     model = UserPermission
     # paginate_by = settings.PAGINATION_NUMBER
     # ordering = ['-updated_at']
@@ -143,37 +144,40 @@ class UserPermissionsListView(SuperUserRequiredMixin, ListView):
         queryset = super().get_queryset()
         return UserPermissionFilters(data=self.request.GET, queryset=queryset).qs
 
-#
-# class UserPermissionsCreateView(SuperUserRequiredMixin, CreateView):
-#     model = UserPermission
-#     template_name = 'acl/admin/roles/form.html'
-#     form_class = UserPermissionForm
-#     success_url = reverse_lazy('roles-list')
-#
-#     def get_context_data(self, *, object_list=None, **kwargs):
-#         context = super().get_context_data()
-#         context['permissions'] = PERMISSIONS
-#         return context
-#
-#
-# class UserPermissionsUpdateView(SuperUserRequiredMixin, UpdateView):
-#     model = UserPermission
-#     form_class = UserPermissionForm
-#     template_name = 'acl/admin/roles/form.html'
-#     success_url = reverse_lazy('roles-list')
-#
-#     def get_context_data(self, *, object_list=None, **kwargs):
-#         context = super().get_context_data()
-#         context['permissions'] = PERMISSIONS
-#         return context
-#
-#
-# class UserPermissionsDeleteView(SuperUserRequiredMixin, DeleteView):
-#     model = UserPermission
-#     template_name = 'acl/admin/roles/list.html'
-#     success_url = reverse_lazy('roles-list')
-#
-#     def dispatch(self, *args, **kwargs):
-#         resp = super().dispatch(*args, **kwargs)
-#         messages.success(self.request, 'نقش مورد نظر با موفقیت حدف شد.')
-#         return resp
+
+class UserPermissionsCreateView(SuperUserRequiredMixin, CreateView):
+    permissions = ['user_permissions_create']
+    model = UserPermission
+    template_name = 'acl/admin/user_permissions/form.html'
+    form_class = UserPermissionForm
+    success_url = reverse_lazy('permission-user-list')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        context['permissions'] = PERMISSIONS
+        return context
+
+
+class UserPermissionsUpdateView(SuperUserRequiredMixin, UpdateView):
+    permissions = ['user_permissions_edit']
+    model = UserPermission
+    form_class = UserPermissionForm
+    template_name = 'acl/admin/user_permissions/form.html'
+    success_url = reverse_lazy('permission-user-list')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        context['permissions'] = PERMISSIONS
+        return context
+
+
+class UserPermissionsDeleteView(SuperUserRequiredMixin, DeleteView):
+    permissions = ['user_permissions_delete']
+    model = UserPermission
+    template_name = 'acl/admin/user_permissions/confirm_delete.html'
+    success_url = reverse_lazy('permission-user-list')
+
+    def dispatch(self, *args, **kwargs):
+        resp = super().dispatch(*args, **kwargs)
+        messages.success(self.request, 'آیتم مورد نظر با موفقیت حدف شد.')
+        return resp

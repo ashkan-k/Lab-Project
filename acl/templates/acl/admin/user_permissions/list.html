@@ -31,13 +31,14 @@
                     <form id="search">
                         <div class="form-group">
                             <div class="row">
-{#                                {% include 'Admin/Filters/search_input.html' %}#}
-{#                                {% include 'Admin/Filters/limit_select_box.html' %}#}
+                                {#                                {% include 'Admin/Filters/search_input.html' %}#}
+                                {#                                {% include 'Admin/Filters/limit_select_box.html' %}#}
                             </div>
                         </div>
                     </form>
 
-                    <a class="btn btn-primary pull-right" href="{% url 'roles-create' %}">افزودن دسترسی کاربران جدید</a>
+                    <a class="btn btn-primary pull-right" href="{% url 'permission-user-create' %}">افزودن دسترسی
+                        کاربران جدید</a>
 
                     <span id="list">
                      {% if object_list %}
@@ -58,28 +59,12 @@
         <td>{{ item.user | default:'---' }}</td>
 
         <td>
-            <div class="buttons ">
-                <form action="{% url 'roles-delete' item.id %}"
-                      id="delete_form_{{ item.id }}"
-                      method="post">
-                    {% csrf_token %}
+                                        <div class="dash_action_link">
+                                            <a href="{% url 'permission-user-update' item.id %}" class="view">ویرایش</a>
+                                            <a href="{% url 'permission-user-delete' item.id %}" class="cancel">حذف</a>
+                                        </div>
+                                    </td>
 
-                    <a href="{% url 'roles-update' item.id %}"
-                       class="btn btn-primary btn-action mr-1"
-                       data-toggle="tooltip" title=""
-                       data-original-title="ویرایش"><i
-                            class="fas fa-pencil-alt"></i><i
-                            class="fa fa-pencil"> </i> </a>
-                    <button type="button"
-                            data-original-title="حذف"
-                            data-toggle="tooltip"
-                            onclick="DeleteConfirm('{{ item.id }}')"
-                            class="delete_button btn btn-danger btn-action"><i
-                            class="fa fa-trash"> </i>
-                    </button>
-                </form>
-            </div>
-        </td>
     </tr>
     {% endfor %}
     </tbody>
@@ -101,26 +86,4 @@
 
     </div>
 
-{% endblock %}
-
-{% block Scripts %}
-    <script>
-        function DeleteConfirm(id) {
-            Swal.fire({
-                title: "هشدار ! ",
-                icon: 'warning',
-                text: "آیا از حذف این آیتم اطمینان دارید؟",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: '#00aced',
-                cancelButtonColor: '#e6294b',
-                confirmButtonText: 'حذف',
-                cancelButtonText: 'انصراف'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $('#delete_form_' + id).submit();
-                }
-            })
-        }
-    </script>
 {% endblock %}
